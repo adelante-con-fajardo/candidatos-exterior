@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dignidad y Compromiso - Santander</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    
+    <!-- Iconos de FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --color-morado-oscuro: #4a148c;
+            --color-morado-medio: #7b1fa2;
+            --color-morado-claro: #e1bee7;
+            --color-acento: #ffeb3b;
+            --color-borde: #000;
+            --bg-body: #f8f9fa;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        /* --- ENCABEZADO --- */
+        .header-dignidad {
+            background: white;
+            max-width: 900px;
+            width: 95%;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(74, 20, 140, 0.15);
+            overflow: hidden;
+            margin-bottom: 10px;
+            text-align: center;
+            position: relative;
+            border: 1px solid rgba(123, 31, 162, 0.1);
+        }
+        .bandera-partido {
+            height: 10px;
+            width: 100%;
+            background: linear-gradient(90deg, var(--color-morado-oscuro) 0%, var(--color-morado-medio) 100%);
+        }
+        .header-content { padding: 35px 25px; }
+        .header-dignidad h1 {
+            color: #333;
+            text-transform: uppercase;
+            font-size: 2.4rem;
+            margin: 0 0 15px 0;
+            line-height: 1.1;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .header-dignidad h1 span {
+            color: var(--color-morado-oscuro);
+            display: block;
+            font-size: 2.8rem;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.05);
+        }
+        .mensaje-persuasivo {
+            font-size: 1.2rem;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #fafafa;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 5px solid var(--color-morado-medio);
+        }
+        .mensaje-persuasivo strong { color: var(--color-morado-oscuro); font-weight: 900; }
+        .cta-box {
+            background: linear-gradient(135deg, var(--color-morado-oscuro) 0%, var(--color-morado-medio) 100%);
+            color: white;
+            display: inline-block;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            box-shadow: 0 8px 20px rgba(123, 31, 162, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .cta-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(123, 31, 162, 0.6);
+        }
+        .cta-sub {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: normal;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        /* --- TARJETONES --- */
+        .seccion-electoral {
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .titulo-tarjeton {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            color: #333;
+        }
+        .tarjeta-container {
+            background-color: white;
+            border: 3px solid var(--color-borde);
+            border-radius: 25px;
+            padding: 20px 30px;
+            display: flex;
+            gap: 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 95%;
+            width: fit-content;
+        }
+        .info-partido {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 160px;
+            text-align: center;
+        }
+        .info-partido img {
+            width: 70%;
+            height: auto;
+            object-fit: contain;
+            margin: 10px 0;
+        }
+        .texto-superior, .texto-inferior {
+            font-weight: bold;
+            font-size: 0.8rem;
+            color: #000;
+        }
+        .contenedor-numeros { display: grid; align-content: center; }
+        .numero {
+            border: 2px solid #000;
+            border-radius: 8px;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: default;
+            transition: transform 0.1s;
+        }
+        .seleccionado {
+            background-color: var(--color-morado-claro);
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .seleccionado:hover {
+            background-color: var(--color-morado-medio);
+            color: white;
+            transform: scale(1.1);
+        }
+        /* === NUEVO: Subrayado FUERTE al hacer clic === */
+        .numero.seleccionado.activo {
+            background-color: var(--color-morado-medio) !important;
+            color: white !important;
+            border: 4px solid var(--color-morado-oscuro);
+            box-shadow: 0 4px 15px rgba(123, 31, 162, 0.5);
+            text-decoration: underline;
+            text-decoration-color: var(--color-acento);
+            text-underline-offset: 6px;
+            transform: scale(1.12);
+        }
+        .grilla-senado { grid-template-columns: repeat(12, 1fr); gap: 6px; }
+        .grilla-senado .numero { width: 35px; height: 28px; font-size: 14px; }
+        .grilla-camara { grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .grilla-camara .numero { width: 70px; height: 40px; font-size: 18px; border-radius: 12px; }
+        /* --- ESTILOS DEL MODAL MEJORADO --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        .card {
+            background: white;
+            width: 100%;
+            max-width: 450px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            animation: zoomIn 0.3s ease-out;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        @keyframes zoomIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+            color: white;
+            cursor: pointer;
+            background: rgba(0,0,0,0.6);
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: background 0.3s;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        .close-btn:hover { background: #d62027; border-color: white; }
+        .card-img-top {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            object-position: top center;
+            flex-shrink: 0;
+            background-color: #eee;
+        }
+        .card-body {
+            padding: 25px 30px;
+            text-align: center;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--color-morado-medio) #f1f1f1;
+        }
+        .card-body::-webkit-scrollbar { width: 8px; }
+        .card-body::-webkit-scrollbar-track { background: #f1f1f1; }
+        .card-body::-webkit-scrollbar-thumb { background: var(--color-morado-medio); border-radius: 4px; }
+        .card-name {
+            font-size: 26px;
+            margin: 0 0 5px 0;
+            color: var(--color-morado-oscuro);
+            line-height: 1.2;
+        }
+        .card-slogan {
+            font-style: italic;
+            color: #d62027;
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-size: 16px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        /* === NUEVO: Número grande en el modal (SENADO 10, etc.) === */
+        .modal-number {
+            background: linear-gradient(90deg, var(--color-morado-oscuro), var(--color-morado-medio));
+            color: white;
+            padding: 8px 22px;
+            border-radius: 30px;
+            display: inline-block;
+            font-size: 1.4rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(74, 20, 140, 0.3);
+            letter-spacing: 1px;
+        }
+        .card-bio {
+            font-size: 15px;
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+        .social-container {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .social-label {
+            font-size: 13px;
+            color: #666;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .social-btn {
+            width: 45px; height: 45px;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            color: white; text-decoration: none; font-size: 20px;
+            transition: transform 0.2s;
+        }
+        .social-btn:hover { transform: scale(1.15); }
+        .bg-twitter { background-color: #000; }
+        .bg-facebook { background-color: #1877F2; }
+        .bg-whatsapp { background-color: #25D366; }
+        .bg-instagram { background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); }
+        .bg-youtube { background-color: #FF0000; }
+        .bg-default { background-color: #555; }
+        /* Responsive */
+        @media (max-width: 600px) {
+            .header-dignidad h1 { font-size: 1.6rem; }
+            .header-dignidad h1 span { font-size: 2rem; }
+            .cta-box { padding: 15px 25px; width: 80%; }
+            .tarjeta-container { flex-direction: column; gap: 20px; padding: 15px; }
+            .grilla-senado { grid-template-columns: repeat(6, 1fr); }
+            .card-img-top { height: 220px; }
+            .card-name { font-size: 22px; }
+            .modal-number { font-size: 1.25rem; padding: 6px 18px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- ENCABEZADO -->
+    <header class="header-dignidad">
+        <div class="bandera-partido"></div>
+        <div class="header-content">
+            <h1>
+                Candidatos por
+                <span>Dignidad y Compromiso</span>
+            </h1>
+            <div class="mensaje-persuasivo">
+                <strong>Santandereanos:</strong> Tu voto es la llave del cambio real. <br>
+                Elige experiencia, honestidad y la verdadera defensa de lo nuestro.
+            </div>
+            <a href="#tarjetones" class="cta-box">
+                <i class="fa-solid fa-check-to-slot icono-voto"></i>
+                ¡VOTA POR EL FUTURO!
+                <span class="cta-sub">No votes por los mismos de siempre</span>
+            </a>
+        </div>
+    </header>
+    <div id="tarjetones">
+        <!-- SECCIÓN CÁMARA -->
+        <div class="seccion-electoral">
+            <div class="titulo-tarjeton">CÁMARA POR SANTANDER</div>
+            <div class="tarjeta-container">
+                <div class="info-partido">
+                    <span class="texto-superior">AHORA COLOMBIA</span>
+                    <img src="ahora.jpg" alt="Logo Partido" onerror="this.src='https://via.placeholder.com/150x80?text=LOGO+PARTIDO'">
+                    <span class="texto-inferior">PREFERENTE</span>
+                </div>
+                <div class="contenedor-numeros grilla-camara" id="grid-camara"></div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN SENADO -->
+        <div class="seccion-electoral">
+            <div class="titulo-tarjeton">SENADO</div>
+            <div class="tarjeta-container">
+                <div class="info-partido">
+                    <span class="texto-superior">AHORA COLOMBIA</span>
+                    <img src="ahora.jpg" alt="Logo Partido" onerror="this.src='https://via.placeholder.com/150x80?text=LOGO+PARTIDO'">
+                    <span class="texto-inferior">PREFERENTE</span>
+                </div>
+                <div class="contenedor-numeros grilla-senado" id="grid-senado"></div>
+            </div>
+        </div>
+        
+    </div>
+    <!-- MODAL -->
+    <div id="modal" class="modal-overlay" onclick="closeModal(event)">
+        <article class="card" id="card-content" onclick="event.stopPropagation()">
+            <!-- Se llena con JS -->
+        </article>
+    </div>
+
+    <script>
+        // --- 1. DATOS (sin cambios) ---
+        const candidatosData = {
+            10:{
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Jorge Enrique Robledo",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_2.webp",
+    "slogan": "\"Lo bueno siempre vuelve\"",
+    "biografia": "En la lucha política desde 1971. Fue senador entre 2002 y 2018, elegido cinco veces y reconocido durante diez años consecutivos como el mejor senador de Colombia por Cifras & Conceptos. Defiende la soberanía nacional, la producción y el empleo, se opone a la corrupción y promueve un proyecto de unidad para superar el subdesarrollo.",
+    "redes": [
+      "https://x.com/JERobledo",
+      "https://api.whatsapp.com/send?phone=573193077295"
+    ]
+  },
+  12:{
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Federico Restrepo",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_3.webp",
+    "slogan": "Ingeniero civil",
+    "biografia": "Con experiencia en gestión pública, empresarial y universitaria, Federico Restrepo ha dirigido Planeación de Medellín, EPM y el programa Autopistas para la Prosperidad, y fue rector universitario. Defiende un Estado que funcione, una política honesta y un Congreso que legisle con rigor ético y soluciones concretas para el país.",
+    "redes": [
+      "https://federicorestrepoposada.com/federico"
+    ]
+  },
+  14:{
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Wilson Collazos Díaz",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_4.webp",
+    "slogan": "Tejedor de Política VIVA",
+    "biografia": "Busca rescatar la política y el Estado de los mercaderes y esclavizadores electorales; para hacer de Colombia un país seguro, unido, próspero, digno y pujante: ¡porque Colombia grande y respetada es posible!",
+    "redes": [
+      "https://www.facebook.com/profile.php?id=100009477088057"
+    ]
+  },
+  15: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Alejandro Rubio Sabogal",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_5.webp",
+    "slogan": "El Señor de Publimotos",
+    "biografia": "Amante de las motos y líder del sector motociclista por más de 32 años.El Señor de PubliMotos ha recorrido Colombia y el mundo en moto, conoce las dolencias y necesidades de quienes día a día utilizan la motocicleta como medio de movilidad.Mi Dignidad & Compromiso será con los motociclistas, porque desde la dolencia y el hecho, sé cuáles son sus molestias y preocupaciones.",
+    "redes": [
+      "https://www.youtube.com/@publimotosweb"
+    ]
+  },
+  17: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Pablo Antonio Bustos Sanchez",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_6.webp",
+    "slogan": "",
+    "biografia": "",
+    "redes": [
+      "https://dignidadycompromiso.co/candidaturas-congreso-2026/#",
+      "https://api.whatsapp.com/send?phone=57"
+    ]
+  },
+  20: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Charles Figueroa Lopera",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_7.webp",
+    "slogan": "",
+    "biografia": "",
+    "redes": [
+      "https://dignidadycompromiso.co/candidaturas-congreso-2026/#",
+      "https://api.whatsapp.com/send?phone=57"
+    ]
+  },
+  23: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Mireya Ramírez Pulido",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_8.webp",
+    "slogan": "Justicia y trabajo sin favores",
+    "biografia": "Hija de colonos y de padres trabajadores, su historia es la de millones que salieron adelante estudiando y trabajando. Abogada, litigante independiente por 25 años, formó a sus hijos sin deberle nada a la clase política. Ha trabajado con jóvenes, mujeres y campesinos. Aspira al Senado para defender la Constitución de 1991, combatir la corrupción con sanciones duras y fortalecer la justicia, el desarrollo territorial y la democracia.",
+    "redes": [
+      "https://api.whatsapp.com/send?phone=573112911029",
+      "https://www.facebook.com/mireya.ramirezpulido"
+    ]
+  },
+  26: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Hugo Alejandro Vásquez Vargas",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_9.webp",
+    "slogan": "",
+    "biografia": "",
+    "redes": [
+      "https://dignidadycompromiso.co/candidaturas-congreso-2026/#",
+      "https://api.whatsapp.com/send?phone=57"
+    ]
+  },
+  29: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Patricio De Jesús Gaviria Patiño",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_10.webp",
+    "slogan": "",
+    "biografia": "",
+    "redes": [
+      "https://dignidadycompromiso.co/candidaturas-congreso-2026/#",
+      "https://api.whatsapp.com/send?phone=57"
+    ]
+  },
+  32: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Oswaldo Bernal Gonzalez",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_11.webp",
+    "slogan": "El campo como centro del desarrollo",
+    "biografia": "Ingeniero agrónomo, extensionista y docente universitario, con más de 20 años en el sector rural y ambiental. Ha trabajado con comunidades campesinas y asociaciones productivas en desarrollo territorial, sanidad, sostenibilidad e innovación. Aspira al Senado para representar a profesionales rurales y ambientales, dignificar el agro, fortalecer políticas públicas serias, cuidar la naturaleza y ejercer una política independiente, sin amarres ideológicos.",
+    "redes": [
+      "https://api.whatsapp.com/send?phone=573144458712",
+      "https://www.facebook.com/OswaldoBernalGonzalez"
+    ]
+  },
+  35: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Luis Yeferson Fonseca Albarracín",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_12.webp",
+    "slogan": "Cuidador de personas con discapacidades",
+    "biografia": "Padre cuidador y administrador público de la ESAP, con posgrado en Control Interno. Cuenta con 12 años de experiencia en el sector público y fue gestor y promotor de la Ley 2297 de 2023. Defiende una gestión estatal responsable, con control efectivo, enfoque social y resultados al servicio de la gente.",
+    "redes": [
+      "https://www.facebook.com/luis.yeferson.fonseca.albarracin.2025"
+    ]
+  },
+  38: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Uriel Rafael Avila Barrios",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_13.webp",
+    "slogan": "",
+    "biografia": "",
+    "redes": [
+      "https://dignidadycompromiso.co/candidaturas-congreso-2026/#",
+      "https://api.whatsapp.com/send?phone=57"
+    ]
+  },
+  41: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "José Félix Montoya Soto",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_14.webp",
+    "slogan": "Territorio, cooperación y desarrollo real",
+    "biografia": "Experto en desarrollo territorial, con trabajo directo en regiones. Ha liderado procesos locales, promovido negocios y diseñado estrategias en programas de cooperación internacional. Defiende un enfoque práctico para fortalecer economías regionales, articular inversión con comunidades y convertir el territorio en motor de bienestar y autonomía.",
+    "redes": [
+      "https://josefelixmontoya.com/",
+      "https://api.whatsapp.com/send?phone=57"
+    ]
+  },
+  44: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Juan Bernardo Serrano Ardila",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_15.webp",
+    "slogan": "Somos Todo Terreno",
+    "biografia": "",
+    "redes": [
+      "https://www.facebook.com/Juanbserrano102"
+    ]
+  },
+  47: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Edwin Yobany Vivas Pérez",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_16.webp",
+    "slogan": "",
+    "biografia": "",
+    "redes": [
+      "https://dignidadycompromiso.co/candidaturas-congreso-2026/#",
+      "https://api.whatsapp.com/send?phone=57"
+    ]
+  },
+  50: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Jorge Hernando Lozano Lara",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_17.webp",
+    "slogan": "",
+    "biografia": "",
+    "redes": [
+      "https://dignidadycompromiso.co/candidaturas-congreso-2026/#",
+      "https://api.whatsapp.com/send?phone=57"
+    ]
+  },
+  53: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Carlos Arnulfo Jiménez Quintero",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_18.webp",
+    "slogan": "Campaña $0 pesos",
+    "biografia": "Impulsa una campaña de cero pesos, la reducción real del gasto público y una oposición firme a la corrupción. Defiende una política austera, sin favores ni maquinarias, enfocada en cuidar los recursos públicos y devolverle credibilidad al Estado.",
+    "redes": [
+      "https://www.facebook.com/people/Campa%C3%B1a-0-Pesos/61584444605430/"
+    ]
+  },
+  56: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Heiner Denis Leal Policitivo",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_19.webp",
+    "slogan": "Cuidado, verdad y democracia",
+    "biografia": "Colombiano y cucuteño, enfermero profesional egresado de la UFPS. Líder social y candidato con la familia, la verdad y el respeto como ejes de acción. Defiende la democracia, la libre expresión y una política cercana a la gente, construida desde el cuidado, la ética y el compromiso con la comunidad.",
+    "redes": [
+      "https://www.facebook.com/heinerleal"
+    ]
+  },
+  59: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Jabzon Lozano Mosquera",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_20.webp",
+    "slogan": "Empleo y economía desde lo local",
+    "biografia": "Ingeniero civil, especialista en vías y transporte, integrante de Dignidad & Compromiso. Trabaja con transparencia y cercanía para impulsar la generación de empleo, fortalecer la economía local y mejorar el bienestar de las familias, promoviendo oportunidades reales de progreso y desarrollo en las comunidades.",
+    "redes": [
+      "https://api.whatsapp.com/send?phone=573104172979"
+    ]
+  },
+  61: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Juan Carlos Bernal Pérez",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_21.webp",
+    "slogan": "Vamos a sanar a Colombia",
+    "biografia": "Abogado con especialización en derecho  y en Cooperación Internacional, 25 años de experiencia en el Congreso, la Presidencia, el Ministerio de Salud y Prosperidad Social.\nDefiende el derecho efectivo a la salud y propone una ley de víctimas de la salud para garantizar atención oportuna, evitar la repetición de fallas y salvar la vida de los pacientes.",
+    "redes": [
+      "https://www.juankbernal.com/",
+      "https://api.whatsapp.com/send?phone=573118327803"
+    ]
+  },
+  62: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Octavio Andres Yules Restrepo",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_22.webp",
+    "slogan": "",
+    "biografia": "",
+    "redes": [
+      "https://dignidadycompromiso.co/candidaturas-congreso-2026/#",
+      "https://api.whatsapp.com/send?phone=57"
+    ]
+  },
+  65: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Andrés Manuel Torres Vargas",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_23.webp",
+    "slogan": "El cambio comienza con usted",
+    "biografia": "¡El cambio comienza con usted, eso lo puedes hacer!",
+    "redes": [
+      "https://www.instagram.com/p/CwIQbpNuAXT/?igsh=MXFseHdqeXNkMmRlNw==",
+      "https://api.whatsapp.com/send?phone=573153455447"
+    ]
+  },
+  69: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Flor Ángela Morales Rivera",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_24.webp",
+    "slogan": "",
+    "biografia": "",
+    "redes": [
+      "https://x.com/FloreMorrive"
+    ]
+  },
+  71: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Nelly Amparo Florez Vega",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_25.webp",
+    "slogan": "El país que queremos en nuestra conciencia",
+    "biografia": "",
+    "redes": [
+      "https://www.facebook.com/share/14RZ8xVq9eA/",
+      "https://api.whatsapp.com/send?phone=573227741635"
+    ]
+  },
+  73: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Flor Nelsy Albarracín Velandia",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_26.webp",
+    "slogan": "",
+    "biografia": "",
+    "redes": [
+      "https://dignidadycompromiso.co/candidaturas-congreso-2026/#",
+      "https://api.whatsapp.com/send?phone=57"
+    ]
+  },
+  75: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Andres Daniel Noriega Sarmiento",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_27.webp",
+    "slogan": "Política sin maquinarias",
+    "biografia": "Profesional en ingeniería y administración, con formación en gestión pública y estrategia. Aspira al Senado sin padrinos ni favores. Defiende una política que sirva a la gente, combata la corrupción y actúe con dignidad y compromiso, poniendo al Estado al servicio de las familias y del país.",
+    "redes": [
+      "https://www.facebook.com/SenadorAndresNoriega75"
+    ]
+  },
+  77: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Mariaelena Vélez Ospino",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_28.webp",
+    "slogan": "Escucho con el corazón, actúo con la razón.",
+    "biografia": "Cartagenera, ingeniera de alimentos y administradora de empresas, con formación en estudios políticos, gerencia y mercadeo. Ha trabajado 12 años en lo público, desde cargos de despacho, asesorías ministeriales y gestión de proyectos nacionales. Defiende una política de territorio, con rigor técnico, transparencia y escucha activa para construir un país más justo.",
+    "redes": [
+      "https://www.instagram.com/marialenavelezoficial"
+    ]
+  },
+  79: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Rodrigo Cortés Borrero",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_29.webp",
+    "slogan": "Derecho y gestión para lo público",
+    "biografia": "Llanero, abogado cum laude y candidato a doctor en Derecho en la Universidad de Salamanca, con maestrías en derecho contractual y gobierno. Ha sido decano universitario, director de movilidad en Villavicencio y profesor por más de una década. Defiende un Estado con reglas claras, rigor jurídico y decisiones pensadas desde el territorio.",
+    "redes": [
+      "https://www.instagram.com/rodrigo_cortesb"
+    ]
+  },
+  81: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Jalid Muadh Jenssen Pérez Losada",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_30.webp",
+    "slogan": "Consejero de paz",
+    "biografia": "",
+    "redes": [
+      "https://www.facebook.com/people/Jalid-Perez/100007991894997/"
+    ]
+  },
+  83: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Jorge Iván Arévalo Pérez",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_31.webp",
+    "slogan": "Ciudadanía y derechos sin trampas",
+    "biografia": "Ciudadano que decidió dar el paso ante el desgaste de la política tradicional. Aspira al Senado para que el Estado garantice derechos con bienestar real, sin corrupción ni malos manejos. Defiende una gestión pública limpia y cercana. El momento del cambio es ahora. Ahora Colombia.",
+    "redes": [
+      "https://jorgeivanarevalo.com/"
+    ]
+  },
+  85: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Sergio Antonio Rojas Avendaño",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_32.webp",
+    "slogan": "Rigor técnico al servicio del país",
+    "biografia": "Ingeniero mecánico con estudios de maestría en economía de políticas públicas, administración y finanzas. Ha dirigido proyectos y ejercido por más de 12 años como docente de posgrado en Colombia y Perú. Defiende decisiones bien diseñadas y ejecutadas, con enfoque práctico, para generar valor social y fortalecer un Estado que funcione para la gente.",
+    "redes": [
+      "https://www.instagram.com/sergio_rojasav/"
+    ]
+  },
+  87: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Edgar Ernesto Robayo Guerrero",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_33.webp",
+    "slogan": "Derecho público para el desarrollo",
+    "biografia": "Abogado constitucionalista con experiencia en derecho público, gestión estatal y desarrollo económico. Defiende un Estado que respete la Constitución, garantice derechos y promueva crecimiento con reglas claras, legalidad y responsabilidad en el uso de los recursos públicos.",
+    "redes": [
+      "https://www.facebook.com/edgarernesto.robayoguerrero.3"
+    ]
+  },
+  91: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Martha Lucia Linares Ibarra",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_34.webp",
+    "slogan": "La Fe nos impulsa, la gente nos mueve",
+    "biografia": "",
+    "redes": [
+      "https://www.facebook.com/malulina05"
+    ]
+  },
+  93: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Alexander Vega Rincón",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_35.webp",
+    "slogan": "La voz del campo en el Senado",
+    "biografia": "De Líbano, Tolima. Viene del campo y conoce de primera mano la vida de quienes trabajan la tierra. Aspira a representar a comunidades que hoy no se sienten escuchadas, llevando su voz al Senado y defendiendo sus derechos con cercanía y compromiso.",
+    "redes": [
+      "https://www.facebook.com/people/Alexander-Vega-al-senado-93/100054390901516/"
+    ]
+  },
+  95: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Juan Carlos Contreras Caceres",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_36.webp",
+    "slogan": "Patria unida y productiva",
+    "biografia": "Con experiencia en la empresa privada y primera participación electoral. Licenciado en Matemáticas y Física. Defiende una educación conectada con el trabajo, bachilleres productivos, articulación Sena-universidades, formación profesional integral y un impulso real al sector agrícola mediante capacitación, vías terciarias, crédito y valor agregado para el campo.",
+    "redes": [
+      "https://www.instagram.com/juancontreras_senado/"
+    ]
+  },
+  96: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Enrique Uribe Botero",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_37.webp",
+    "slogan": "Ciudad y territorio sostenible",
+    "biografia": "Arquitecto, magíster en urbanismo y paisaje, con trayectoria en el sector público desde el Departamento Nacional de Planeación y la dirección del Jardín Botánico de Bogotá y del Consejo Profesional de Arquitectura. Defiende una visión de ciudad sostenible, planificación rigurosa y políticas públicas pensadas desde el territorio. Colaborador ocasional de El Espectador.",
+    "redes": [
+      "https://www.facebook.com/people/Enrique-Uribe-Senador/pfbid02XANpMXooodsPfQD3m2ZLeKyi6ywSsjDrLWT1XTJ6GUKo8LDatFsutUuyFZRA5nrDl/",
+      "https://www.instagram.com/boteroenriqueuribe"
+    ]
+  },
+  97: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Sandra Patricia Cifuentes Ortiz",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_38.webp",
+    "slogan": "",
+    "biografia": "",
+    "redes": [
+      "https://dignidadycompromiso.co/candidaturas-congreso-2026/#",
+      "https://api.whatsapp.com/send?phone=57"
+    ]
+  },
+  100: {
+    "departamento": "Harold De Jesús Maestre Mercado",
+    "nombre": "Jennifer Dalley Pedraza Sandoval",
+    "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_SENADO-WEB_39.webp",
+    "slogan": "Representante a la Cámara 2022-2026",
+    "biografia": "Candidata al Senado con el número *100* de la Coalición AHORA Colombia 🔵🔴🟣 (MIRA, Nuevo Liberalismo, Dignidad y Compromiso).\n🏆 *Mejor Representante a la Cámara 2025* según Cifras y Conceptos. Top 5 en 2024 y 2023.\n🎓 Economista de la Universidad Nacional, y exlideresa estudiantil.\n⚖️ Sus causas: educación, derechos de las mujeres y lucha contra la corrupción\n📜 Leyes logradas:• Prohibición del matrimonio infantil• Reforma Ley 30: presupuesto para educación superior pública• Salud mental para la juventud #SíEsParaTanto\n💥 Destapó la corrupción del título falso de Juliana Guerrero y tumbó la corrupta elección del Contralor.",
+    "redes": [
+      "https://www.instagram.com/JenniferPedrazas"
+    ]
+  },// CÁMARA
+          401: {
+            "nombre": "Litza Mayorga",
+            "imagen_url": "https://dignidadycompromiso.co/wp-content/uploads/2026/02/26-02-10_DC_CAMARA-CONSULADOS-WEB_1.webp",
+            "slogan": "La nueva voz en el Congreso de los colombianos que viven en el exterior",
+            "biografia": "",
+            "redes": [
+              "http://www.litzamayorga.com/"
+            ]
+          }
+        };
+
+        // --- 2. VARIABLE PARA SABER CUÁL NÚMERO ESTÁ ACTIVO ---
+        let currentActiveNumber = null;
+
+        // --- 3. RENDERIZADO DE GRILLAS ---
+        function crearGrilla(contenedorId, inicio, fin, numerosResaltados) {
+            const contenedor = document.getElementById(contenedorId);
+            contenedor.innerHTML = ''; // limpiar por si acaso
+
+            for (let i = inicio; i <= fin; i++) {
+                const div = document.createElement('div');
+                div.classList.add('numero');
+                div.textContent = i;
+
+                if (candidatosData[i] || numerosResaltados.includes(i)) {
+                    div.classList.add('seleccionado');
+
+                    // === CLIC: subrayado FUERTE + mantener resaltado ===
+                    div.onclick = () => {
+                        // Quitar el subrayado fuerte al anterior
+                        if (currentActiveNumber && currentActiveNumber !== div) {
+                            currentActiveNumber.classList.remove('activo');
+                        }
+                        // Activar el nuevo
+                        div.classList.add('activo');
+                        currentActiveNumber = div;
+
+                        openModal(i);
+                    };
+                }
+                contenedor.appendChild(div);
+            }
+        }
+
+        // Definir números válidos
+        const idsSenado = Object.keys(candidatosData).map(Number).filter(n => n <= 100);
+        const idsCamara = Object.keys(candidatosData).map(Number).filter(n => n > 100);
+
+        crearGrilla('grid-senado', 1, 100, idsSenado);
+        crearGrilla('grid-camara', 401, 402, idsCamara);
+
+        // --- 4. MODAL CON NÚMERO GRANDE ---
+        const modal = document.getElementById('modal');
+        const cardContent = document.getElementById('card-content');
+
+        function openModal(idCandidato) {
+            const data = candidatosData[idCandidato];
+            if (!data) return;
+
+            const tipoEleccion = idCandidato <= 100 ? 'SENADO' : 'CÁMARA POR SANTANDER';
+
+            let redesHtml = '';
+            if (Array.isArray(data.redes) && data.redes.length > 0) {
+                data.redes.forEach(url => {
+                    let iconClass = 'fa-link';
+                    let bgClass = 'bg-default';
+                    if (url.includes('facebook')) { iconClass = 'fa-facebook-f'; bgClass = 'bg-facebook'; }
+                    else if (url.includes('x.com') || url.includes('twitter')) { iconClass = 'fa-x-twitter'; bgClass = 'bg-twitter'; }
+                    else if (url.includes('instagram')) { iconClass = 'fa-instagram'; bgClass = 'bg-instagram'; }
+                    else if (url.includes('whatsapp')) { iconClass = 'fa-whatsapp'; bgClass = 'bg-whatsapp'; }
+                    else if (url.includes('youtube')) { iconClass = 'fa-youtube'; bgClass = 'bg-youtube'; }
+                    redesHtml += `<a href="${url}" target="_blank" class="social-btn ${bgClass}"><i class="fa-brands ${iconClass}"></i></a>`;
+                });
+            } else {
+                redesHtml = '<span style="color:#999; font-size:12px">No disponibles</span>';
+            }
+
+            cardContent.innerHTML = `
+                <div class="close-btn" onclick="closeModal(event)"><i class="fa-solid fa-xmark"></i></div>
+                <img src="${data.imagen_url}" alt="${data.nombre}" class="card-img-top" onerror="this.src='https://via.placeholder.com/400x320?text=Sin+Imagen'">
+                <div class="card-body">
+                    <!-- NÚMERO GRANDE EN EL MODAL -->
+                    <div class="modal-number">${tipoEleccion} ${idCandidato}</div>
+                    
+                    <h2 class="card-name">${data.nombre}</h2>
+                    ${data.slogan ? `<div class="card-slogan"><i class="fa-solid fa-bullhorn"></i> ${data.slogan}</div>` : ''}
+                    <p class="card-bio">${data.biografia || "Información en proceso de actualización."}</p>
+                   
+                    <div class="social-container">
+                        <span class="social-label">Síguelo en:</span>
+                        <div style="display:flex; gap:8px;">
+                            ${redesHtml}
+                        </div>
+                    </div>
+                </div>
+            `;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal(event) {
+            modal.style.display = 'none';
+            // El número sigue subrayado fuerte en la grilla (último visto)
+        }
+
+        // Cerrar con Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
