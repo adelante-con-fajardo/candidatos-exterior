@@ -328,13 +328,10 @@
     <header class="header-dignidad">
         <div class="bandera-partido"></div>
         <div class="header-content">
-            <h1>
-                Candidatos por
-                <span>Dignidad y Compromiso</span>
-            </h1>
+          <h1>Colombianos en el Exterior <span>Dignidad y Compromiso</span></h1>
             <div class="mensaje-persuasivo">
-                <strong>Santandereanos:</strong> Tu voto es la llave del cambio real. <br>
-                Elige experiencia, honestidad y la verdadera defensa de lo nuestro.
+                <strong>¡Tu voto desde el exterior cuenta!</strong> Tu voto es la llave del cambio real. <br>
+                Marca el logo de <strong>Dignidad y Compromiso</strong> y el número de tu candidato para renovar el Congreso.
             </div>
             <a href="#tarjetones" class="cta-box">
                 <i class="fa-solid fa-check-to-slot icono-voto"></i>
@@ -346,7 +343,7 @@
     <div id="tarjetones">
         <!-- SECCIÓN CÁMARA -->
         <div class="seccion-electoral">
-            <div class="titulo-tarjeton">CÁMARA POR SANTANDER</div>
+            <div class="titulo-tarjeton">CÁMARA POR EL EXTERIOR</div>
             <div class="tarjeta-container">
                 <div class="info-partido">
                     <span class="texto-superior">AHORA COLOMBIA</span>
@@ -838,7 +835,7 @@
             const data = candidatosData[idCandidato];
             if (!data) return;
 
-            const tipoEleccion = idCandidato <= 100 ? 'SENADO' : 'CÁMARA POR SANTANDER';
+            const tipoEleccion = idCandidato <= 100 ? 'SENADO' : 'CÁMARA EXTERIOR';
 
             let redesHtml = '';
             if (Array.isArray(data.redes) && data.redes.length > 0) {
